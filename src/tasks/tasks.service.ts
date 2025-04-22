@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Task } from './task.entity';
+import { Task } from './tasks.entity';
 
 @Injectable()
 export class TasksService {
@@ -15,12 +15,12 @@ export class TasksService {
   }
 
   create(text: string): Promise<Task> {
-    const task = this.taskRepo.create({ text });
-    return this.taskRepo.save(task);
+    const newTask = this.taskRepo.create({ text });
+    return this.taskRepo.save(newTask);
   }
 
-  async update(id: number, completed: boolean): Promise<void> {
-    await this.taskRepo.update(id, { completed });
+  async update(id: number, data: Partial<Task>): Promise<void> {
+    await this.taskRepo.update(id, data);
   }
 
   async remove(id: number): Promise<void> {
