@@ -7,10 +7,20 @@ import { AppModule } from './app.module';
 // }
 // bootstrap();
 
+// async function bootstrap() {
+//   const app = await NestFactory.create(AppModule);
+//   app.enableCors(); // ✅ allow cross-origin requests from frontend
+//   await app.listen(3001); // ✅ change to 3001
+// }
+// bootstrap();
+
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors(); // ✅ allow cross-origin requests from frontend
-  await app.listen(3001); // ✅ change to 3001
+  app.enableCors(); // allow requests from frontend
+  await app.listen(3001); // make sure this matches your frontend axios URL
 }
 bootstrap();
+
+
 

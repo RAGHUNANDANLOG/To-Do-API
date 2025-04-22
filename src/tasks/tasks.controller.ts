@@ -1,27 +1,28 @@
-import { Controller, Get, Post, Body, Delete, Param, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
 import { TasksService } from './tasks.service';
+import { Task } from './tasks.entity';
 
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Get()
-  findAll() {
+  getAll(): Promise<Task[]> {
     return this.tasksService.findAll();
   }
 
   @Post()
-  create(@Body('text') text: string) {
+  create(@Body('text') text: string): Promise<Task> {
     return this.tasksService.create(text);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body('completed') completed: boolean) {
-    return this.tasksService.update(id, completed);
+  update(@Param('id') id: string, @Body() body: Partial<Task>): Promise<void> {
+    return this.tasksService.update(+id, body);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.tasksService.remove(id);
+  remove(@Param('id') id: string): Promise<void> {
+    return this.tasksService.remove(+id);
   }
 }
